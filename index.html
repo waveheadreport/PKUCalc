@@ -5,20 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PKU Calculator</title>
+    <style>
+        .collapsible {
+          background-color: #777;
+          color: white;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
+        
+        .active, .collapsible:hover {
+          background-color: #555;
+        }
+        
+        .content {
+          padding: 0 18px;
+          display: none;
+          overflow: hidden;
+          background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
     <h1>PKU Protein Calculator</h1>
-    <p>Protein Goal from Meal in grams
-    <input id="wa1" type="number" style="width: fit-content(5em)"></p>
-    <p>Meal weight without non-protein additives in grams
-    <input id="wa2" type="number" style="width: 130px"></p>
-    <p>Meal weight with additives in grams
-    <input id="wa3" type="number" style="width: 130px"></p>
-    <p>Finished meal weight in grams
-    <input id="wa4" type="number" style="width: 130px"></p>
-    <button type="button" onclick="calcPRAIMwA()">Submit</button>
-    <p>Protein Eaten in grams = <a id="waProEaten"></a></p>
-    <p>Protein Remaining from Meal in grams<a id="waProRemain"></a></p>
+    <button type="button" class="collapsible">PKU Protein Calculator</button>
+    <div class="content">
+        
+        <p>Protein Goal from Meal in grams
+        <input id="wa1" type="number" style="width: fit-content(5em)"></p>
+        <p>Meal weight before "free" additives in grams
+        <input id="wa2" type="number" style="width: 130px"></p>
+        <p>Meal weight after "free" additives in grams
+        <input id="wa3" type="number" style="width: 130px"></p>
+        <p>Finished meal weight in grams
+        <input id="wa4" type="number" style="width: 130px"></p>
+        <button type="button" onclick="calcPRAIMwA()">Submit</button>
+        <p>Protein Eaten in grams = <a id="waProEaten"></a></p>
+        <p>Protein Remaining from Meal in grams<a id="waProRemain"></a></p>
+    </div>
     <script>
         function calcPRAIMwA () {
             var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
@@ -37,6 +65,20 @@
         }
         function calcPFR () {
 
+        }
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "block";
+            }
+        });
         }
     </script>
 </body>
