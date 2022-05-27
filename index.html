@@ -60,10 +60,23 @@
         <p>Protein Eaten in grams = <a id="woaProEaten"></a></p>
         <p>Protein Remaining from Meal in grams = <a id="woaProRemain"></a></p>
     </div>
+    <button type="button" class="collapsible">Calculate Protein Fill Requirements</button>
+    <div class="content">
+        
+        <p>Protein Goal Remaining in grams
+        <input id="pgr1" type="number" style="width: fit-content(5em)"></p>
+        <p>Total Protein Per Serving in grams
+        <input id="pgr2" type="number" style="width: 130px"></p>
+        <p>Total Serving Weight in grams
+        <input id="pgr3" type="number" style="width: 130px"></p>
+        <button type="button" onclick="calcPFR()">Submit</button>
+        <p>Weight needed for Goal in grams = <a id="pgrWN"></a></p>
+        
+    </div>
     <script>
         function calcPRAIMwA () {
             var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
-            wa1= document.getElementById("wa1").value;
+            wa1 = document.getElementById("wa1").value;
             wa2 = document.getElementById("wa2").value;
             wa3 = document.getElementById("wa3").value;
             wa4 = document.getElementById("wa4").value;
@@ -75,16 +88,21 @@
         }
         function calcPRAIMwoA () {
             var woa1, woa2, woa3, woaPEText, woaPRText;
-            woa1= document.getElementById("woa1").value;
+            woa1 = document.getElementById("woa1").value;
             woa2 = document.getElementById("woa2").value;
             woa3 = document.getElementById("woa3").value;
-            woaPEText = (woa3/woa2)*woa1;
-            woaPRText = woa1-woaPEText
+            woaPEText = (woa2-woa3)*(woa1*.01);
+            woaPRText = woa1-woaPEText;
             document.getElementById("woaProEaten").innerHTML = woaPEText
             document.getElementById("woaProRemain").innerHTML = woaPRText
         }
         function calcPFR () {
-
+            var pgr1, pgr2, pgr3, pgrText;
+            pgr1 = document.getElementById("pgr1").value;
+            pgr2 = document.getElementById("pgr2").value;
+            pgr3 = document.getElementById("pgr3").value;
+            pgrText = (pgr1/pgr2)*pgr3;
+            document.getElementById("pgrWN").innerHTML = pgrText;
         }
         var coll = document.getElementsByClassName("collapsible");
         var i;
