@@ -32,7 +32,7 @@
 </head>
 <body>
     <h1>PKU Protein Calculator</h1>
-    <button type="button" class="collapsible">PKU Protein Calculator</button>
+    <button type="button" class="collapsible">Protein Remaining from Leftovers with "free" Additives</button>
     <div class="content">
         
         <p>Protein Goal from Meal in grams
@@ -45,7 +45,20 @@
         <input id="wa4" type="number" style="width: 130px"></p>
         <button type="button" onclick="calcPRAIMwA()">Submit</button>
         <p>Protein Eaten in grams = <a id="waProEaten"></a></p>
-        <p>Protein Remaining from Meal in grams<a id="waProRemain"></a></p>
+        <p>Protein Remaining from Meal in grams = <a id="waProRemain"></a></p>
+    </div>
+    <button type="button" class="collapsible">Protein Remaining from Leftovers</button>
+    <div class="content">
+        
+        <p>Protein Goal from Meal in grams
+        <input id="woa1" type="number" style="width: fit-content(5em)"></p>
+        <p>Meal weight in grams
+        <input id="woa2" type="number" style="width: 130px"></p>
+        <p>Finished Meal weight in grams
+        <input id="woa3" type="number" style="width: 130px"></p>
+        <button type="button" onclick="calcPRAIMwoA()">Submit</button>
+        <p>Protein Eaten in grams = <a id="woaProEaten"></a></p>
+        <p>Protein Remaining from Meal in grams = <a id="woaProRemain"></a></p>
     </div>
     <script>
         function calcPRAIMwA () {
@@ -61,7 +74,14 @@
             document.getElementById("waProRemain").innerHTML = waPRText
         }
         function calcPRAIMwoA () {
-
+            var woa1, woa2, woa3, woaPEText, woaPRText;
+            woa1= document.getElementById("woa1").value;
+            woa2 = document.getElementById("woa2").value;
+            woa3 = document.getElementById("woa3").value;
+            woaPEText = (woa3/woa2)*woa1;
+            woaPRText = woa1-woaPEText
+            document.getElementById("woaProEaten").innerHTML = woaPEText
+            document.getElementById("woaProRemain").innerHTML = woaPRText
         }
         function calcPFR () {
 
