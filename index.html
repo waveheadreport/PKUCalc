@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKU Calculator</title>
+</head>
+<body>
+    <h1>PKU Protein Calculator</h1>
+    <p>Protein Goal from Meal in grams
+    <input id="wa1" type="number" style="width: fit-content(5em)"></p>
+    <p>Meal weight without non-protein additives in grams
+    <input id="wa2" type="number" style="width: 130px"></p>
+    <p>Meal weight with additives in grams
+    <input id="wa3" type="number" style="width: 130px"></p>
+    <p>Finished meal weight in grams
+    <input id="wa4" type="number" style="width: 130px"></p>
+    <button type="button" onclick="calcPRAIMwA()">Submit</button>
+    <p>Protein Eaten in grams = <a id="waProEaten"></a></p>
+    <p>Protein Remaining from Meal in grams<a id="waProRemain"></a></p>
+    <script>
+        function calcPRAIMwA () {
+            var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
+            wa1= document.getElementById("wa1").value;
+            wa2 = document.getElementById("wa2").value;
+            wa3 = document.getElementById("wa3").value;
+            wa4 = document.getElementById("wa4").value;
+            addWeight = (wa3-wa2);
+            waPEText = (1-(addWeight/wa3))*(wa3-wa4)*(wa1*0.01);
+            waPRText = waPEText-wa1;
+            document.getElementById("waProEaten").innerHTML = waPEText
+            document.getElementById("waProRemain").innerHTML = waPRText
+        }
+        function calcPRAIMwoA () {
+
+        }
+        function calcPFR () {
+
+        }
+    </script>
+</body>
+</html>
