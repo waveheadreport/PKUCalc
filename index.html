@@ -80,8 +80,8 @@
             wa2 = document.getElementById("wa2").value;
             wa3 = document.getElementById("wa3").value;
             wa4 = document.getElementById("wa4").value;
-            addWeight = (wa3-wa2);
-            waPEText = (1-(addWeight/wa3))*(wa3-wa4)*(wa1*0.01);
+            addWeight = (wa2/wa3);
+            waPEText = (wa2/wa3)*(wa3-wa4)/wa2;
             waPRText = waPEText-wa1;
             document.getElementById("waProEaten").innerHTML = waPEText
             document.getElementById("waProRemain").innerHTML = waPRText
