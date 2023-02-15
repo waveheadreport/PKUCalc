@@ -30,8 +30,12 @@
         }
     </style>
 </head>
-<body>
+<body onload="displayProteinByDay()">
     <h1>PKU Protein Calculator</h1>
+    
+    <!-- Add a new list element to display the protein data -->
+    <h2>Tracked Protein Intake</h2>
+    <ul id="protein-list"></ul>
     <!--<button type="button" class="collapsible">Protein Remaining from Leftovers with "free" Additives</button>
     <div class="content">
         
@@ -86,6 +90,25 @@
           // Store the updated protein intake for today
           localStorage.setItem(today, JSON.stringify(proteinIntake));
           }
+        function displayProteinByDay() {
+          // Get the protein intake data from localStorage
+          const proteinData = Object.entries(localStorage)
+          .map(([date, protein]) => ({ date, protein: JSON.parse(protein) }));
+
+          // Get the element where the protein data will be displayed
+          const proteinList = document.getElementById("protein-list");
+
+          // Clear the existing protein data
+          proteinList.innerHTML = "";
+
+          // Add the protein data to the list
+          proteinData.forEach(({ date, protein }) => {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `${date}: ${protein} grams`;
+            proteinList.appendChild(listItem);
+          });
+          }
+
         /*function calcPRAIMwA () {
             var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
             wa1 = document.getElementById("wa1").value;
