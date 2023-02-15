@@ -179,6 +179,7 @@
             const proteinData = JSON.stringify(woaPEText);
             localStorage.setItem(today, proteinData);
             //displayProteinByDay();
+            loadProteinDataFromCookie();
         }
         /*function calcPFR () {
             var pgr1, pgr2, pgr3, pgrText;
