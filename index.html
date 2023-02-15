@@ -30,7 +30,7 @@
         }
     </style>
 </head>
-<body onload="displayProteinByDay()">
+<body>
     <h1>PKU Protein Calculator</h1>
     
     <!-- Add a new list element to display the protein data -->
@@ -132,6 +132,7 @@
             const today = new Date().toISOString().substr(0, 10);
             const proteinData = JSON.stringify(woaPEText);
             localStorage.setItem(today, proteinData);
+            displayProteinByDay();
         }
         /*function calcPFR () {
             var pgr1, pgr2, pgr3, pgrText;
