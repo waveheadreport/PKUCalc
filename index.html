@@ -133,26 +133,26 @@
             cookieValue += "|" + newData;
           } else {
             cookieValue = newData;
-            }
-            setCookie("proteinIntakeData", cookieValue, 2);
-            }
+          }
+          setCookie("proteinIntakeData", cookieValue, 2);
+        }
         function loadProteinDataFromCookie() {
           var cookieValue = getCookie("proteinIntakeData");
           if (cookieValue) {
-          var data = cookieValue.split("|");
-          for (var i = 0; i < data.length; i++) {
-            var row = data[i].split(":");
-            var date = row[0];
-            var proteinIntake = row[1];
-            var table = document.getElementById("proteinTable");
-            var newRow = table.insertRow(-1);
-            var dateCell = newRow.insertCell(0);
-            var proteinCell = newRow.insertCell(1);
-            dateCell.innerHTML = date;
-            proteinCell.innerHTML = proteinIntake;
+            var data = cookieValue.split("|");
+            for (var i = 0; i < data.length; i++) {
+              var row = data[i].split(":");
+              var date = row[0];
+              var proteinIntake = row[1];
+              var table = document.getElementById("proteinTable");
+              var newRow = table.insertRow(-1);
+              var dateCell = newRow.insertCell(0);
+              var proteinCell = newRow.insertCell(1);
+              dateCell.innerHTML = date;
+              proteinCell.innerHTML = proteinIntake;
             }
+          }
         }
-    }
         /*function calcPRAIMwA () {
             var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
             wa1 = document.getElementById("wa1").value;
