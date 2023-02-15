@@ -30,7 +30,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="loadProteinDataFromCookie()">
     <h1>PKU Protein Calculator</h1>
     
     <!-- Add a new list element to display the protein data -->
@@ -90,7 +90,7 @@
           // Store the updated protein intake for today
           localStorage.setItem(today, JSON.stringify(proteinIntake));
           }
-        function displayProteinByDay() {
+        /*function displayProteinByDay() {
         // Get the element where the protein data will be displayed
           const proteinList = document.getElementById("protein-list");
 
@@ -106,7 +106,53 @@
             listItem.innerHTML = `${date}: ${protein} grams`;
             proteinList.appendChild(listItem);
           }
-        }
+        }*/
+        function displayProteinByDay() {
+  // Get input values
+  var date = document.getElementById("dateInput").value;
+  var proteinIntake = document.getElementById("proteinInput").value;
+  
+  // Create new row in the table
+  var table = document.getElementById("proteinTable");
+  var row = table.insertRow(-1);
+  var dateCell = row.insertCell(0);
+  var proteinCell = row.insertCell(1);
+  
+  // Add data to the new row
+  dateCell.innerHTML = date;
+  proteinCell.innerHTML = proteinIntake;
+  
+  // Clear input fields
+  document.getElementById("dateInput").value = "";
+  document.getElementById("proteinInput").value = "";
+  
+  // Save data to a cookie
+  var cookieValue = getCookie("proteinIntakeData");
+  var newData = date + ":" + proteinIntake;
+  if (cookieValue) {
+    cookieValue += "|" + newData;
+  } else {
+    cookieValue = newData;
+  }
+  setCookie("proteinIntakeData", cookieValue, 2);
+}
+        function loadProteinDataFromCookie() {
+  var cookieValue = getCookie("proteinIntakeData");
+  if (cookieValue) {
+    var data = cookieValue.split("|");
+    for (var i = 0; i < data.length; i++) {
+      var row = data[i].split(":");
+      var date = row[0];
+      var proteinIntake = row[1];
+      var table = document.getElementById("proteinTable");
+      var newRow = table.insertRow(-1);
+      var dateCell = newRow.insertCell(0);
+      var proteinCell = newRow.insertCell(1);
+      dateCell.innerHTML = date;
+      proteinCell.innerHTML = proteinIntake;
+    }
+  }
+}
         /*function calcPRAIMwA () {
             var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
             wa1 = document.getElementById("wa1").value;
@@ -132,7 +178,7 @@
             const today = new Date().toISOString().substr(0, 10);
             const proteinData = JSON.stringify(woaPEText);
             localStorage.setItem(today, proteinData);
-            displayProteinByDay();
+            //displayProteinByDay();
         }
         /*function calcPFR () {
             var pgr1, pgr2, pgr3, pgrText;
