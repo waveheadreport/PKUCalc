@@ -32,7 +32,7 @@
 </head>
 <body>
     <h1>PKU Protein Calculator</h1>
-    <button type="button" class="collapsible">Protein Remaining from Leftovers with "free" Additives</button>
+    <!--<button type="button" class="collapsible">Protein Remaining from Leftovers with "free" Additives</button>
     <div class="content">
         
         <p>Protein Goal from Meal in grams
@@ -46,10 +46,10 @@
         <button type="button" onclick="calcPRAIMwA()">Submit</button>
         <p>Protein Eaten in grams = <a id="waProEaten"></a></p>
         <p>Protein Remaining from Meal in grams = <a id="waProRemain"></a></p>
-    </div>
-    <button type="button" class="collapsible">Protein Remaining from Leftovers</button>
+    </div>-->
+    <!--<button type="button" class="collapsible">Protein Remaining from Leftovers</button>-->
     <div class="content">
-        
+        <h1>Protein Remaining from Leftovers</h1>
         <p>Protein Goal from Meal in grams
         <input id="woa1" type="number" style="width: fit-content(5em)"></p>
         <p>Meal weight in grams
@@ -60,7 +60,7 @@
         <p>Protein Eaten in grams = <a id="woaProEaten"></a></p>
         <p>Protein Remaining from Meal in grams = <a id="woaProRemain"></a></p>
     </div>
-    <button type="button" class="collapsible">Calculate Protein Fill Requirements</button>
+    <!--<button type="button" class="collapsible">Calculate Protein Fill Requirements</button>
     <div class="content">
         
         <p>Protein Goal Remaining in grams
@@ -72,7 +72,7 @@
         <button type="button" onclick="calcPFR()">Submit</button>
         <p>Weight needed for Goal in grams = <a id="pgrWN"></a></p>
         
-    </div>
+    </div>-->
     <script>
         function calcPRAIMwA () {
             var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
@@ -80,9 +80,9 @@
             wa2 = document.getElementById("wa2").value;
             wa3 = document.getElementById("wa3").value;
             wa4 = document.getElementById("wa4").value;
-            addWeight = (wa2/wa3);
-            waPEText = (wa2/wa3)*((wa3-wa4)/wa2)*wa1;
-            waPRText = wa1-waPEText;
+            addWeight = (wa3-wa2);
+            waPEText = (1-(addWeight/wa3))*(wa3-wa4)*(wa1*0.01);
+            waPRText = waPEText-wa1;
             document.getElementById("waProEaten").innerHTML = waPEText
             document.getElementById("waProRemain").innerHTML = waPRText
         }
