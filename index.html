@@ -73,6 +73,19 @@
         
     </div>-->
     <script>
+        function trackProteinByDay() {
+          // Get the current date
+          const today = new Date().toLocaleDateString();
+
+          // Get the protein intake for today
+          let proteinIntake = JSON.parse(localStorage.getItem(today)) || 0;
+
+          // Add the protein intake from the current meal
+          proteinIntake += woaPEText;
+
+          // Store the updated protein intake for today
+          localStorage.setItem(today, JSON.stringify(proteinIntake));
+          }
         /*function calcPRAIMwA () {
             var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
             wa1 = document.getElementById("wa1").value;
@@ -94,6 +107,8 @@
             woaPRText = woa1-woaPEText;
             document.getElementById("woaProEaten").innerHTML = woaPEText
             document.getElementById("woaProRemain").innerHTML = woaPRText
+            // Store the protein intake for the current day
+            trackProteinByDay();
         }
         /*function calcPFR () {
             var pgr1, pgr2, pgr3, pgrText;
