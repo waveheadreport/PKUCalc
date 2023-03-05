@@ -2,9 +2,36 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Protein Intake Calculator</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PKU Calculator</title>
+  <style>
+      .collapsible {
+      background-color: #777;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+     }
+        
+     .active, .collapsible:hover {
+       background-color: #555;
+     }
+        
+     .content {
+       padding: 0 18px;
+       display: none;
+       overflow: hidden;
+       background-color: #f1f1f1;
+      }
+  </style>
 </head>
 <body>
+  <h1>PKU Protein Calculator</h1>
   <div>
     <label for="totalProtein">Total Protein:</label>
     <input type="number" id="totalProtein" name="totalProtein">
