@@ -1,208 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PKU Calculator</title>
-    <style>
-        .collapsible {
-          background-color: #777;
-          color: white;
-          cursor: pointer;
-          padding: 18px;
-          width: 100%;
-          border: none;
-          text-align: left;
-          outline: none;
-          font-size: 15px;
-        }
-        
-        .active, .collapsible:hover {
-          background-color: #555;
-        }
-        
-        .content {
-          padding: 0 18px;
-          display: none;
-          overflow: hidden;
-          background-color: #f1f1f1;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Protein Intake Calculator</title>
 </head>
-<body onload="loadProteinDataFromCookie()">
-    <h1>PKU Protein Calculator</h1>
-    
-    <!-- Add a new list element to display the protein data -->
-    <h2>Tracked Protein Intake</h2>
-    <ul id="protein-list"></ul>
-    <!--<button type="button" class="collapsible">Protein Remaining from Leftovers with "free" Additives</button>
-    <div class="content">
-        
-        <p>Protein Goal from Meal in grams
-        <input id="wa1" type="number" style="width: fit-content(5em)"></p>
-        <p>Meal weight before "free" additives in grams
-        <input id="wa2" type="number" style="width: 130px"></p>
-        <p>Meal weight after "free" additives in grams
-        <input id="wa3" type="number" style="width: 130px"></p>
-        <p>Finished meal weight in grams
-        <input id="wa4" type="number" style="width: 130px"></p>
-        <button type="button" onclick="calcPRAIMwA()">Submit</button>
-        <p>Protein Eaten in grams = <a id="waProEaten"></a></p>
-        <p>Protein Remaining from Meal in grams = <a id="waProRemain"></a></p>
-    </div>-->
-    <button type="button" class="collapsible">Protein Remaining from Leftovers</button>
-    <div class="content">        
-        <p>Protein Goal from Meal in grams
-        <input id="woa1" type="number" style="width: fit-content(5em)"></p>
-        <p>Meal weight in grams
-        <input id="woa2" type="number" style="width: 130px"></p>
-        <p>Finished Meal weight in grams
-        <input id="woa3" type="number" style="width: 130px"></p>
-        <button type="button" onclick="calcPRAIMwoA()">Submit</button>
-        <p>Protein Eaten in grams = <a id="woaProEaten"></a></p>
-        <p>Protein Remaining from Meal in grams = <a id="woaProRemain"></a></p>
-    </div>
-    <!--<button type="button" class="collapsible">Calculate Protein Fill Requirements</button>
-    <div class="content">
-        
-        <p>Protein Goal Remaining in grams
-        <input id="pgr1" type="number" style="width: fit-content(5em)"></p>
-        <p>Total Protein Per Serving in grams
-        <input id="pgr2" type="number" style="width: 130px"></p>
-        <p>Total Serving Weight in grams
-        <input id="pgr3" type="number" style="width: 130px"></p>
-        <button type="button" onclick="calcPFR()">Submit</button>
-        <p>Weight needed for Goal in grams = <a id="pgrWN"></a></p>
-        
-    </div>-->
-    <script>
-        function trackProteinByDay() {
-          // Get the current date
-          const today = new Date().toLocaleDateString();
+<body>
+  <div>
+    <label for="totalProtein">Total Protein:</label>
+    <input type="number" id="totalProtein" name="totalProtein">
+  </div>
+  <div>
+    <label for="mealWeight">Meal Weight (grams):</label>
+    <input type="number" id="mealWeight" name="mealWeight">
+  </div>
+  <div>
+    <label for="finishedMealWeight">Finished Meal Weight (grams):</label>
+    <input type="number" id="finishedMealWeight" name="finishedMealWeight">
+  </div>
+  <button onclick="calculateProtein()">Calculate Protein Intake</button>
 
-          // Get the protein intake for today
-          let proteinIntake = JSON.parse(localStorage.getItem(today)) || 0;
+  <div>
+    <h2>Protein Intake Today:</h2>
+    <ul id="proteinEaten"></ul>
+  </div>
 
-          // Add the protein intake from the current meal
-          proteinIntake += woaPEText;
+  <script>
+    function calculateProtein() {
+      const totalProtein = parseFloat(document.getElementById("totalProtein").value);
+      const mealWeight = parseFloat(document.getElementById("mealWeight").value);
+      const finishedMealWeight = parseFloat(document.getElementById("finishedMealWeight").value);
 
-          // Store the updated protein intake for today
-          localStorage.setItem(today, JSON.stringify(proteinIntake));
-          }
-        /*function displayProteinByDay() {
-        // Get the element where the protein data will be displayed
-          const proteinList = document.getElementById("protein-list");
+      const proteinEaten = ((mealWeight-finishedMealWeight)/mealWeight)*(totalProtein);
+      const proteinIntakeData = JSON.parse(localStorage.getItem("proteinIntakeData")) || {};
+      const date = new Date().toLocaleDateString();
 
-        // Clear the existing protein data
-          //proteinList.innerHTML = "";
+      if (!proteinIntakeData[date]) {
+        proteinIntakeData[date] = [];
+      }
 
-        // Loop over the dates in localStorage and add the protein data to the list
-          for (let i = 0; i < localStorage.length; i++) {
-            const date = localStorage.key(i);
-            const protein = JSON.parse(localStorage.getItem(date));
+      proteinIntakeData[date].push(proteinEaten);
+      localStorage.setItem("proteinIntakeData", JSON.stringify(proteinIntakeData));
+      displayProteinIntake();
+    }
 
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `${date}: ${protein} grams`;
-            proteinList.appendChild(listItem);
-          }
-        }*/
-        function displayProteinByDay() {
-        // Get input values
-          var date = document.getElementById("dateInput").value;
-          var proteinIntake = document.getElementById("proteinInput").value;
-  
-        // Create new row in the table
-          var table = document.getElementById("proteinTable");
-          var row = table.insertRow(-1);
-          var dateCell = row.insertCell(0);
-          var proteinCell = row.insertCell(1);
-  
-        // Add data to the new row
-          dateCell.innerHTML = date;
-          proteinCell.innerHTML = proteinIntake;
-  
-        // Clear input fields
-          //document.getElementById("dateInput").value = "";
-          //document.getElementById("proteinInput").value = "";
-  
-        // Save data to a cookie
-          var cookieValue = getCookie("proteinIntakeData");
-          var newData = date + ":" + proteinIntake;
-          if (cookieValue) {
-            cookieValue += "|" + newData;
-          } else {
-            cookieValue = newData;
-          }
-          setCookie("proteinIntakeData", cookieValue, 2);
-        }
-        function loadProteinDataFromCookie() {
-          var cookieValue = getCookie("proteinIntakeData");
-          if (cookieValue) {
-            var data = cookieValue.split("|");
-            for (var i = 0; i < data.length; i++) {
-              var row = data[i].split(":");
-              var date = row[0];
-              var proteinIntake = row[1];
-              var table = document.getElementById("proteinTable");
-              var newRow = table.insertRow(-1);
-              var dateCell = newRow.insertCell(0);
-              var proteinCell = newRow.insertCell(1);
-              dateCell.innerHTML = date;
-              proteinCell.innerHTML = proteinIntake;
-            }
-          }
-        }
-        /*function calcPRAIMwA () {
-            var wa1, wa2, wa3, wa4, addWeight, waPEText, waPRText;
-            wa1 = document.getElementById("wa1").value;
-            wa2 = document.getElementById("wa2").value;
-            wa3 = document.getElementById("wa3").value;
-            wa4 = document.getElementById("wa4").value;
-            addWeight = (wa3-wa2);
-            waPEText = (1-(addWeight/wa3))*(wa3-wa4)*(wa1*0.01);
-            waPRText = waPEText-wa1;
-            document.getElementById("waProEaten").innerHTML = waPEText
-            document.getElementById("waProRemain").innerHTML = waPRText
-        }*/
-        function calcPRAIMwoA () {
-            var woa1, woa2, woa3, woaPEText, woaPRText;
-            woa1 = document.getElementById("woa1").value;
-            woa2 = document.getElementById("woa2").value;
-            woa3 = document.getElementById("woa3").value;
-            woaPEText = ((woa2-woa3)/woa2)*(woa1);
-            woaPRText = woa1-woaPEText;
-            document.getElementById("woaProEaten").innerHTML = woaPEText
-            document.getElementById("woaProRemain").innerHTML = woaPRText
-            // Save the protein intake data to localStorage
-            const today = new Date().toISOString().substr(0, 10);
-            const proteinData = JSON.stringify(woaPEText);
-            localStorage.setItem(today, proteinData);
-            //displayProteinByDay();
-            loadProteinDataFromCookie();
-        }
-        /*function calcPFR () {
-            var pgr1, pgr2, pgr3, pgrText;
-            pgr1 = document.getElementById("pgr1").value;
-            pgr2 = document.getElementById("pgr2").value;
-            pgr3 = document.getElementById("pgr3").value;
-            pgrText = (pgr1/pgr2)*pgr3;
-            document.getElementById("pgrWN").innerHTML = pgrText;
-        }*/
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
+    function displayProteinIntake() {
+      const proteinIntakeData = JSON.parse(localStorage.getItem("proteinIntakeData")) || {};
+      const date = new Date().toLocaleDateString();
+      const proteinEaten = proteinIntakeData[date] || [];
 
-        for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-            content.style.display = "none";
-            } else {
-            content.style.display = "block";
-            }
-        });
-        }
-    </script>
+      const proteinEatenList = document.getElementById("proteinEaten");
+      proteinEatenList.innerHTML = "";
+
+      proteinEaten.forEach(function(protein) {
+        const listItem = document.createElement("li");
+        listItem.textContent = protein;
+        proteinEatenList.appendChild(listItem);
+      });
+    }
+
+    displayProteinIntake();
+  </script>
 </body>
 </html>
