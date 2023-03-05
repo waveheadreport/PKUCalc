@@ -49,6 +49,7 @@
   <div>
     <h2>Protein Intake Today:</h2>
     <ul id="proteinEaten"></ul>
+	<h2>Total Protein Eaten Today: <span id="totalProteinEaten"></span> grams</h2>
   </div>
 
   <script>
@@ -77,12 +78,17 @@
 
       const proteinEatenList = document.getElementById("proteinEaten");
       proteinEatenList.innerHTML = "";
-
+	  
+	  let totalProteinEaten = 0;
       proteinEaten.forEach(function(protein) {
         const listItem = document.createElement("li");
         listItem.textContent = protein;
         proteinEatenList.appendChild(listItem);
+		totalProteinEaten += protein;
       });
+	  
+	  const totalProteinEatenDisplay = document.getElementById("totalProteinEaten");
+      totalProteinEatenDisplay.textContent = totalProteinEaten.toFixed(2);
     }
 
     displayProteinIntake();
