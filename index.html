@@ -33,6 +33,10 @@
 <body>
   <h1>PKU Protein Calculator</h1>
   <div>
+    <label for="dailyProteinGoal">Daily Protein Goal (grams):</label>
+    <input type="number" id="dailyProteinGoal" name="dailyProteinGoal">
+  </div>
+  <div>
     <label for="totalProtein">Total Protein:</label>
     <input type="number" id="totalProtein" name="totalProtein">
   </div>
@@ -50,10 +54,13 @@
     <h2>Protein Intake Today:</h2>
     <ul id="proteinEaten"></ul>
 	<h2>Total Protein Eaten Today: <span id="totalProteinEaten"></span> grams</h2>
+	<h2>Difference from Daily Goal: <span id="differenceFromGoal"></span> grams</h2>
+	<h2>Grams of whole milk: <span id="gramsOfMilk"></span></h2>
   </div>
 
   <script>
     function calculateProtein() {
+	  const dailyProteinGoal = parseFloat(document.getElementById("dailyProteinGoal").value);
       const totalProtein = parseFloat(document.getElementById("totalProtein").value);
       const mealWeight = parseFloat(document.getElementById("mealWeight").value);
       const finishedMealWeight = parseFloat(document.getElementById("finishedMealWeight").value);
@@ -89,8 +96,22 @@
 	  
 	  const totalProteinEatenDisplay = document.getElementById("totalProteinEaten");
       totalProteinEatenDisplay.textContent = totalProteinEaten.toFixed(2);
+	  
+	  const dailyProteinGoal = parseFloat(document.getElementById("dailyProteinGoal").value);
+      const differenceFromGoalDisplay = document.getElementById("differenceFromGoal");
+	  const differenceFromGoal = dailyProteinGoal - totalProteinEaten;
+      differenceFromGoalDisplay.textContent = differenceFromGoal.toFixed(2);
+	  const gramsOfMilkDisplay = document.getElementById("gramsOfMilk");
+	  const gramsOfMilk = (differenceFromGoal * 32).toFixed(2);
+	  gramsOfMilkDisplay.textContent = `${gramsOfMilk} grams of whole milk`;
     }
-
+	
+	/*const dailyProteinGoalInput = document.getElementById("dailyProteinGoal");
+    dailyProteinGoalInput.addEventListener("input", function() {
+	  const dailyProteinGoal = parseFloat(this.value);
+      displayProteinIntake(dailyProteinGoal);
+	});*/
+	
     displayProteinIntake();
   </script>
 </body>
