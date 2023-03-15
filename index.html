@@ -6,56 +6,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PKU Calculator</title>
   <style>
-      .collapsible {
-      background-color: #777;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      background-color: #555;
       color: white;
-      cursor: pointer;
-      padding: 18px;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+    }
+
+    input {
       width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #555;
+      color: white;
+      font-size: 14px;
+      width: 100%;
+      padding: 10px;
+      margin: 20px 0;
+      cursor: pointer;
       border: none;
-      text-align: left;
-      outline: none;
-      font-size: 15px;
-     }
-        
-     .active, .collapsible:hover {
-       background-color: #555;
-     }
-        
-     .content {
-       padding: 0 18px;
-       display: none;
-       overflow: hidden;
-       background-color: #f1f1f1;
-      }
+      text-align: center;
+    }
+
+    button:hover {
+      background-color: #777;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 20px 0;
+    }
+
+    #proteinEaten {
+      padding: 0;
+      list-style-type: none;
+    }
+
+    li {
+      padding: 5px 0;
+    }
+
   </style>
 </head>
 <body>
-  <h1>PKU Protein Calculator</h1>
-  <div>
-    <label for="dailyProteinGoal">Daily Protein Goal (grams):</label>
+  <h1>PKU Calculator</h1>
+  <div class="container">
+    <label for="dailyProteinGoal">Daily Protein Goal (g):</label>
     <input type="number" id="dailyProteinGoal" name="dailyProteinGoal">
-  </div>
-  <div>
-    <label for="totalProtein">Total Protein:</label>
+    <label for="totalProtein">Total Protein (g):</label>
     <input type="number" id="totalProtein" name="totalProtein">
-  </div>
-  <div>
-    <label for="mealWeight">Meal Weight (grams):</label>
+    <label for="mealWeight">Meal Weight (g):</label>
     <input type="number" id="mealWeight" name="mealWeight">
-  </div>
-  <div>
-    <label for="finishedMealWeight">Finished Meal Weight (grams):</label>
+    <label for="finishedMealWeight">Finished Meal Weight (g):</label>
     <input type="number" id="finishedMealWeight" name="finishedMealWeight">
-  </div>
-  <button onclick="calculateProtein()">Calculate Protein Intake</button>
+    <button onclick="calculateProtein()">Calculate</button>
 
-  <div>
     <h2>Protein Intake Today:</h2>
     <ul id="proteinEaten"></ul>
-	<h2>Total Protein Eaten Today: <span id="totalProteinEaten"></span> grams</h2>
-	<h2>Difference from Daily Goal: <span id="differenceFromGoal"></span> grams</h2>
-	<h2>Grams of whole milk: <span id="gramsOfMilk"></span></h2>
+    <h2>Total Protein Eaten Today: <span id="totalProteinEaten"></span> g</h2>
+    <h2>Difference from Goal: <span id="differenceFromGoal"></span> g</h2>
+    <h2>Grams of Whole Milk: <span id="gramsOfMilk"></span></h2>
   </div>
 
   <script>
