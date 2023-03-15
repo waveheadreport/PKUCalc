@@ -136,6 +136,49 @@
 	  gramsOfMilkDisplay.textContent = `${gramsOfMilk} grams of whole milk`;
     }
 	
+	function storeDailyProteinGoal(dailyProteinGoal) {
+	  const goalData = {
+		value: dailyProteinGoal,
+		timestamp: new Date().getTime()
+	  };
+	  localStorage.setItem("dailyProteinGoalData", JSON.stringify(goalData));
+	}
+	
+	function getDailyProteinGoal() {
+	  const goalData = JSON.parse(localStorage.getItem("dailyProteinGoalData"));
+
+	  if (!goalData) {
+       return null;
+      }
+
+	  const now = new Date();
+	  const storedDate = new Date(goalData.timestamp);
+
+	  const isSameDay =
+		now.getDate() === storedDate.getDate() &&
+		now.getMonth() === storedDate.getMonth() &&
+		now.getFullYear() === storedDate.getFullYear();
+
+	  if (isSameDay) {
+        return goalData.value;
+      }
+
+      return null;
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+	  const dailyProteinGoalInput = document.getElementById("dailyProteinGoal");
+	  const storedDailyProteinGoal = getDailyProteinGoal();
+
+	  if (storedDailyProteinGoal) {
+	    dailyProteinGoalInput.value = storedDailyProteinGoal;
+	  }
+
+	  dailyProteinGoalInput.addEventListener("change", function () {
+		const dailyProteinGoal = parseFloat(this.value);
+		storeDailyProteinGoal(dailyProteinGoal);
+		displayProteinIntake();
+	  });
+	
 	/*const dailyProteinGoalInput = document.getElementById("dailyProteinGoal");
     dailyProteinGoalInput.addEventListener("input", function() {
 	  const dailyProteinGoal = parseFloat(this.value);
@@ -143,6 +186,7 @@
 	});*/
 	
     displayProteinIntake();
+  });
   </script>
 </body>
 </html>
